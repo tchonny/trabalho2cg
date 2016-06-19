@@ -20,7 +20,7 @@ class Objeto_3D {
   protected:
     int indice_textura;
     Ponto_3D centro;
-    float raio;
+    float raio, altura;
  public:
     enum IntersectionMode{
         Nearest,
