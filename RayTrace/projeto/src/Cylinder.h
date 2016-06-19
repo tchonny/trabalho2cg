@@ -1,11 +1,17 @@
 #ifndef CYLINDER_H
 #define CYLINDER_H
 
+#include "Objeto_3d.h"
 
-class cylinder
-{
+class Cylinder : public Objeto_3D {
+
 public:
-    cylinder();
+    Cylinder(int texture, float radius, float height, const Ponto_3D& center);
+    ~Cylinder() {}
+
+    Intersection Intercepta(const Raio &r_vis, IntersectionMode mode, float threshold);
+    Vetor_3D normal(const Ponto_3D &ponto) const;
+    TexturePoint pontoTextura(const Ponto_3D &ponto) const;
 };
 
 #endif // CYLINDER_H

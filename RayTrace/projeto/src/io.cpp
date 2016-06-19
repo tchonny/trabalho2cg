@@ -13,7 +13,7 @@
 #include "CaixaParalela.h"
 #include "PlyParser.h"
 #include "TriangleMesh.h"
-#include "cylinder.h"
+#include "Cylinder.h"
 
 bool LeArquivo( Cenario * hcenario, Camara * hcamara, int hlinhas, int hcolunas, const QString& filename)
 {
@@ -84,6 +84,9 @@ tok Token(const QString& linha)
 
     if(linha == "#PLY") return tok_PLY;
 
+    /*Token que lê o cilindro */
+    if(linha == "#CYLINDER") return tok_CYLINDER;
+
   return tok_DESCONHECIDO;
 }
 
@@ -105,6 +108,8 @@ void LeInfo( tok tag, Cenario *hcenario, Camara *hcamara, int hlinhas, int hcolu
   Esfera *esf1;
   CaixaParalela *cxp1;
   Triangulo *tri1;
+  //variável
+  Cylinder *cylinder1;
 
   int temp1,temp2;
   switch(tag)
@@ -187,6 +192,16 @@ void LeInfo( tok tag, Cenario *hcenario, Camara *hcamara, int hlinhas, int hcolu
       return;
     case tok_DESCONHECIDO:
       return;
+      //Le o cilindro do arquivo e insere no cenário.
+    case tok_CYLINDER:
+      linha >> a >> p;
+      linha >> e;
+      linha >> f;
+      p1 = LePonto(linha);
+      cylinder1 = new Cylinder(a, e, f, p1);
+      hcenario->InsereObjeto(cylinder1);
+      return;
+
     case tok_PLY:
       linha >> a;
       linha >> nome;
